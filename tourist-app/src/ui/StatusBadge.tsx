@@ -12,7 +12,7 @@ interface StatusBadgeProps {
 
 const STATUS_CONFIG = {
   green: {
-    label: 'Luźno',
+    label: 'Wolno',
     bg: '#DCFCE7',
     text: '#15803D',
     dot: '#22C55E',

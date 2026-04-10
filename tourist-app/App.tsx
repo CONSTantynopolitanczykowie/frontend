@@ -1,13 +1,33 @@
-// App.tsx – Tourist App Root
+// App.tsx – Tourist App Root z globalnym stanem rewards
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
 import { MapScreen } from './src/screens/MapScreen';
 import { WalletScreen } from './src/screens/WalletScreen';
+import { REWARDS, Reward } from './src/data/mockData';
 
 type Tab = 'map' | 'wallet';
 
 export default function App() {
   const [activeTab, setActiveTab] = React.useState<Tab>('map');
+
+  // ── GLOBALNY STAN NAGRÓD ──────────────────────────────────────────────────
+  // Trzymamy tutaj, żeby badge w tab barze był zsynchronizowany ze stanem
+  const [rewards, setRewards] = React.useState<Reward[]>(REWARDS);
+
+  const handleUseReward = (id: string) => {
+    setRewards((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, used: true } : r))
+    );
+  };
+
+  const activeRewardsCount = rewards.filter((r) => !r.used).length;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -15,37 +35,46 @@ export default function App() {
 
       {/* Zawartość ekranu */}
       <View style={styles.content}>
-        {activeTab === 'map' ? <MapScreen /> : <WalletScreen />}
+        {activeTab === 'map' ? (
+          <MapScreen />
+        ) : (
+          <WalletScreen rewards={rewards} onUse={handleUseReward} />
+        )}
       </View>
 
       {/* Dolna nawigacja */}
       <View style={styles.tabBar}>
+        {/* Zakładka Mapy */}
         <TouchableOpacity
           style={[styles.tab, activeTab === 'map' && styles.tabActive]}
           onPress={() => setActiveTab('map')}
           activeOpacity={0.7}
         >
+          {activeTab === 'map' && <View style={styles.tabIndicator} />}
           <Text style={[styles.tabIcon, activeTab === 'map' && styles.tabIconActive]}>🗺</Text>
           <Text style={[styles.tabLabel, activeTab === 'map' && styles.tabLabelActive]}>
             Mapa Plaży
           </Text>
-          {activeTab === 'map' && <View style={styles.tabIndicator} />}
         </TouchableOpacity>
 
+        {/* Zakładka Portfela z dynamicznym badge */}
         <TouchableOpacity
           style={[styles.tab, activeTab === 'wallet' && styles.tabActive]}
           onPress={() => setActiveTab('wallet')}
           activeOpacity={0.7}
         >
-          <Text style={[styles.tabIcon, activeTab === 'wallet' && styles.tabIconActive]}>💛</Text>
+          {activeTab === 'wallet' && <View style={styles.tabIndicator} />}
+          <View style={styles.tabIconWrapper}>
+            <Text style={[styles.tabIcon, activeTab === 'wallet' && styles.tabIconActive]}>💛</Text>
+            {activeRewardsCount > 0 && (
+              <View style={styles.tabBadge}>
+                <Text style={styles.tabBadgeText}>{activeRewardsCount}</Text>
+              </View>
+            )}
+          </View>
           <Text style={[styles.tabLabel, activeTab === 'wallet' && styles.tabLabelActive]}>
             Portfel
           </Text>
-          {activeTab === 'wallet' && <View style={styles.tabIndicator} />}
-          {/* Badge z liczbą nagród */}
-          <View style={styles.tabBadge}>
-            <Text style={styles.tabBadgeText}>2</Text>
-          </View>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -60,7 +89,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
-  // Tab bar
   tabBar: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
@@ -81,8 +109,17 @@ const styles = StyleSheet.create({
     position: 'relative',
     gap: 2,
   },
-  tabActive: {
-    // Aktywna zakładka
+  tabActive: {},
+  tabIndicator: {
+    position: 'absolute',
+    top: 0,
+    width: 32,
+    height: 3,
+    backgroundColor: '#0EA5E9',
+    borderRadius: 2,
+  },
+  tabIconWrapper: {
+    position: 'relative',
   },
   tabIcon: {
     fontSize: 22,
@@ -100,28 +137,25 @@ const styles = StyleSheet.create({
     color: '#0EA5E9',
     fontWeight: '800',
   },
-  tabIndicator: {
-    position: 'absolute',
-    top: 0,
-    width: 32,
-    height: 3,
-    backgroundColor: '#0EA5E9',
-    borderRadius: 2,
-  },
+  // Badge dynamiczny z liczbą aktywnych kuponów
   tabBadge: {
     position: 'absolute',
-    top: 4,
-    right: '25%',
+    top: -5,
+    right: -8,
     backgroundColor: '#EF4444',
-    width: 16,
+    minWidth: 16,
     height: 16,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 3,
+    borderWidth: 1.5,
+    borderColor: '#FFFFFF',
   },
   tabBadgeText: {
     color: '#FFFFFF',
     fontSize: 9,
     fontWeight: '800',
+    lineHeight: 10,
   },
 });

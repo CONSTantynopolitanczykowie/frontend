@@ -101,8 +101,8 @@ export const NudgeModal: React.FC<NudgeModalProps> = ({
           <Text style={styles.nudgeTitle}>Mamy dla Ciebie lepszą opcję! 🎯</Text>
           <Text style={styles.nudgeDescription}>
             Przejdź <Text style={styles.nudgeHighlight}>{crowdedEntry.distance}</Text> dalej na{' '}
-            <Text style={styles.nudgeHighlight}>{greenEntry.name}</Text> (jest luźno!),
-            a odblokujesz nagrodę:
+            <Text style={styles.nudgeHighlight}>{greenEntry.name}</Text> – tam jest wolno!{' '}
+            Odbierz nagrodę za wybór wolnej plaży:
           </Text>
         </View>
 
@@ -123,7 +123,7 @@ export const NudgeModal: React.FC<NudgeModalProps> = ({
           <View style={styles.destinationDot} />
           <View>
             <Text style={styles.destinationName}>{greenEntry.name}</Text>
-            <Text style={styles.destinationStatus}>🟢 Luźno · {greenEntry.occupancy}% zajętości</Text>
+            <Text style={styles.destinationStatus}>🟢 Wolno · {greenEntry.occupancy}% zajętości</Text>
           </View>
           <Text style={styles.destinationDistance}>{crowdedEntry.distance} →</Text>
         </View>
@@ -131,7 +131,7 @@ export const NudgeModal: React.FC<NudgeModalProps> = ({
         {/* Przyciski akcji */}
         <View style={styles.actions}>
           <PrimaryButton
-            label="🗺 Prowadź na luźną plażę"
+            label="🗺 Prowadź na wolną plażę"
             onPress={onNavigate}
             variant="primary"
             fullWidth
