@@ -1,6 +1,6 @@
 // src/ui/RewardCard.tsx
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Image } from 'react-native';
 import { Reward } from '../data/mockData';
 
 interface RewardCardProps {
@@ -8,49 +8,25 @@ interface RewardCardProps {
   onUse?: (id: string) => void;
 }
 
-const QRCodeDisplay: React.FC<{ code: string }> = ({ code }) => {
-  // Prosty wizualny QR code - grid 8x8 z pseudo-losowym wzorem
-  const hash = (str: string, i: number) => {
-    let h = 0;
-    for (let j = 0; j < str.length; j++) h = (h * 31 + str.charCodeAt(j) + i) & 0xffffffff;
-    return Math.abs(h) % 2 === 0;
-  };
-
-  const rows = Array.from({ length: 10 }, (_, row) =>
-    Array.from({ length: 10 }, (_, col) => hash(code, row * 10 + col))
-  );
-
-  return (
-    <View style={qrStyles.container}>
-      {/* Stałe "finder" patterns jak w prawdziwym QR */}
-      <View style={qrStyles.grid}>
-        {rows.map((row, ri) => (
-          <View key={ri} style={qrStyles.row}>
-            {row.map((filled, ci) => (
-              <View
-                key={ci}
-                style={[
-                  qrStyles.cell,
-                  filled ? qrStyles.filled : qrStyles.empty,
-                ]}
-              />
-            ))}
-          </View>
-        ))}
-      </View>
-      <Text style={qrStyles.codeText}>{code}</Text>
+const QRCodeDisplay: React.FC<{ code: string }> = ({ code }) => (
+  <View style={qrStyles.container}>
+    <View style={qrStyles.imageWrapper}>
+      <Image
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        source={require('../../assets/qr.png')}
+        style={qrStyles.image}
+        resizeMode="contain"
+      />
     </View>
-  );
-};
+    <Text style={qrStyles.codeText}>{code}</Text>
+  </View>
+);
 
 const qrStyles = StyleSheet.create({
-  container: { alignItems: 'center', gap: 8 },
-  grid: { padding: 8, backgroundColor: '#FFFFFF', borderRadius: 8, gap: 2 },
-  row: { flexDirection: 'row', gap: 2 },
-  cell: { width: 14, height: 14, borderRadius: 2 },
-  filled: { backgroundColor: '#1E293B' },
-  empty: { backgroundColor: '#FFFFFF' },
-  codeText: { fontSize: 11, color: '#64748B', fontFamily: 'monospace', letterSpacing: 1 },
+  container:    { alignItems: 'center', gap: 10 },
+  imageWrapper: { backgroundColor: '#FFFFFF', borderRadius: 12, padding: 12, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 8, elevation: 2 },
+  image:        { width: 180, height: 180 },
+  codeText:     { fontSize: 11, color: '#64748B', letterSpacing: 1.5, fontFamily: 'monospace' },
 });
 
 export const RewardCard: React.FC<RewardCardProps> = ({ reward, onUse }) => {
