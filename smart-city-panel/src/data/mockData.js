@@ -1,0 +1,143 @@
+// src/data/mockData.js
+
+export const BEACH_ENTRIES = [
+  {
+    id: 'w38',
+    name: 'Wejście 38',
+    status: 'green',
+    sandOccupancy: 22,
+    binOccupancy: 35,
+    tourists: 1240,
+    coords: { x: 5, y: 6 },   // pozycja w gridzie mapy (col, row)
+  },
+  {
+    id: 'w40',
+    name: 'Wejście 40',
+    status: 'yellow',
+    sandOccupancy: 58,
+    binOccupancy: 72,
+    tourists: 3180,
+    coords: { x: 10, y: 6 },
+  },
+  {
+    id: 'w42',
+    name: 'Wejście 42',
+    status: 'red',
+    sandOccupancy: 95,
+    binOccupancy: 98,
+    tourists: 5420,
+    coords: { x: 16, y: 6 },
+  },
+  {
+    id: 'w43',
+    name: 'Wejście 43',
+    status: 'yellow',
+    sandOccupancy: 67,
+    binOccupancy: 55,
+    tourists: 2840,
+    coords: { x: 20, y: 6 },
+  },
+  {
+    id: 'w45',
+    name: 'Wejście 45',
+    status: 'green',
+    sandOccupancy: 31,
+    binOccupancy: 28,
+    tourists: 1650,
+    coords: { x: 25, y: 6 },
+  },
+  {
+    id: 'w47',
+    name: 'Wejście 47',
+    status: 'green',
+    sandOccupancy: 14,
+    binOccupancy: 18,
+    tourists: 880,
+    coords: { x: 30, y: 6 },
+  },
+  {
+    id: 'w49',
+    name: 'Wejście 49',
+    status: 'yellow',
+    sandOccupancy: 72,
+    binOccupancy: 81,
+    tourists: 3720,
+    coords: { x: 35, y: 6 },
+  },
+  {
+    id: 'w51',
+    name: 'Wejście 51',
+    status: 'red',
+    sandOccupancy: 88,
+    binOccupancy: 90,
+    tourists: 4900,
+    coords: { x: 40, y: 6 },
+  },
+];
+
+export const LIVE_ALERTS = [
+  {
+    id: 'a1',
+    severity: 'critical',
+    title: 'WOPR: KRYTYCZNIE',
+    message: 'Zablokowany korytarz życia na Wejściu 42! Wyślij interwencję.',
+    entry: 'w42',
+    time: '22:09',
+    icon: '🚨',
+    actionLabel: 'Dysponuj patrol',
+  },
+  {
+    id: 'a2',
+    severity: 'warning',
+    title: 'Przepełnione kosze',
+    message: 'Wejście 42 – kosze na śmieci przepełnione w 98%. Pilna interwencja.',
+    entry: 'w42',
+    time: '22:04',
+    icon: '🗑️',
+    actionLabel: 'Wyślij służby',
+  },
+  {
+    id: 'a3',
+    severity: 'warning',
+    title: 'Tłok – kosze Wejście 49',
+    message: 'Kosze w 81%. Zalecana wymiana w ciągu 30 min.',
+    entry: 'w49',
+    time: '21:55',
+    icon: '⚠️',
+    actionLabel: 'Planuj odbiór',
+  },
+  {
+    id: 'a4',
+    severity: 'info',
+    title: 'Gamifikacja aktywna',
+    message: 'Wysłano 143 nudges do turystów z Wejść 42 i 51. Oczekiwany odpływ: ~200 os.',
+    entry: null,
+    time: '21:48',
+    icon: '🎯',
+    actionLabel: 'Szczegóły',
+  },
+];
+
+export const PREDICTION = {
+  date: 'jutro',
+  temp: 28,
+  wind: 25,
+  windDir: 'NW',
+  condition: 'Słonecznie z silnym wiatrem',
+  parasol_effect: 'extreme',
+  predicted_drop: 40,
+  total_expected: 24800,
+  recommendations: [
+    'Włączyć zniżki odciążające na Wejściach 38, 45, 47',
+    'Zwiększyć patrole WOPR na Wejściach 42 i 51',
+    'Uruchomić system nagłośnienia z komunikatami przekierowującymi',
+    'Przygotować 3 dodatkowe brygady wywozu odpadów',
+  ],
+};
+
+export const STATS = {
+  totalTourists: 18432,
+  avgOccupancy: 63,
+  activeNudges: 143,
+  rewardsIssued: 89,
+};
