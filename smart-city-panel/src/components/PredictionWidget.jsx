@@ -91,7 +91,7 @@ export const PredictionWidget = () => {
 
   return (
     <DashboardCard
-      title="Prognoza AI – Jutro"
+      title="Moduł Predykcyjny"
       icon={<Brain className="w-4 h-4 text-purple-400" />}
       variant="warning"
       headerRight={
@@ -163,7 +163,7 @@ export const PredictionWidget = () => {
           <div className="flex items-center gap-2 mb-2.5">
             <Zap className="w-3.5 h-3.5 text-yellow-400" />
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-              Rekomendowane działania AI
+              Rekomendowane działania operacyjne
             </span>
           </div>
           <div className="space-y-1.5">
@@ -172,7 +172,7 @@ export const PredictionWidget = () => {
             ))}
           </div>
           <p className="text-[10px] text-slate-600 mt-3 italic text-center">
-            Model: DenSea-AI v2.1 · Trafność prognoz: 89% · Dane: IMGW, IoT sensorzy
+            Moduł Predykcji v2.1 · Trafność prognoz: 89% · Źródła: IMGW, IoT, kamery dronów
           </p>
         </div>
       )}
